@@ -1,0 +1,51 @@
+#login {
+  display: flex;
+  flex-direction: row;
+  .form-login {
+    background-color: white;
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 25vh;
+    flex-direction: column;
+    h1 {
+      font-size: 50px;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 12px;
+      color: #808080;
+      font-weight: 300;
+    }
+    form {
+      width: 70%;
+      margin-top: 30px;
+      .form-label {
+        font-size: 15px;
+        font-weight: 400;
+      }
+      .btn {
+        width: 100%;
+        margin-top: 20px;
+        background-color: #ffca40;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .hr {
+        border-top: 2px dashed #c7151d;
+      }
+    }
+  }
+
+  .hero-login {
+    background-image: url("https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=422&q=80");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px 0 0 20px;
+    width: 50vw;
+    height: 100vh;
+  }
+}
