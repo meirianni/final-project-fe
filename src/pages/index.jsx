@@ -11,7 +11,7 @@ function Index() {
       {/* <Kasir /> */}
       {/* <Login /> */}
       {/* <Kitchen /> */}
-      <Admin />
+      {/* {<Admin />} */}
     </>
   );
 }
