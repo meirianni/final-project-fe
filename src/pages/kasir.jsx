@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+// import Modal from "../../component/modal.jsx";
+
+import { getProducts } from "../service/product";
+
 import logo from "../assets/logo.png";
 import alldish from "../assets/spoon-and-fork.png";
 import burgers from "../assets/burger.png";
@@ -11,10 +15,28 @@ import plus from "../assets/plus.png";
 import minus from "../assets/minus.png";
 import close from "../assets/close.png";
 import tick from "../assets/tick.png";
+//bikin function
+
 const Kasir = () => {
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    const { code, products, msg } = await getProducts();
+    if (code === 200) {
+      setData(products);
+    } else {
+      alert(msg);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    // ... another func
+  }, []);
+
   return (
-    <div className="section-bagitiga">
-      <section id="dashboard">
+    <div className="row section-cashier">
+      <section id="sidebar" className="col-1">
         <div className="brand">
           <img src={logo} alt="" />
           <h1>
@@ -53,14 +75,67 @@ const Kasir = () => {
           <h4>Kasir</h4>
         </div>
       </section>
-      <section id="tengah">
+      <section id="center" className="col-lg-8 col-md-6">
         <div className="name">
           <h1>Burgers</h1>
           <img src={burgercolor} alt="" />
         </div>
-        <div className="menu">
-          <div className="menu1">
+        <div className="menu row">
+          {data.map((product, idx) => (
+            <div key={idx} className="menu1 col-lg-3 col-md-3">
+              <img
+                className="img-fluid"
+                src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+                alt=""
+              />
+              <h2>{product.name}</h2>
+              <h3>{product.size}</h3>
+              <h1>{product.price}</h1>
+            </div>
+          ))}
+          {/* <div className="menu1 col-lg-3 col-md-3">
             <img
+              className="img-fluid"
+              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+              alt=""
+            />
+            <h2>Cheese Burger</h2>
+            <h3>300g</h3>
+            <h1>Rp. 45.000</h1>
+          </div> */}
+          {/* <div className="menu1 col-lg-3 col-md-3 ">
+            <img
+              className="img-fluid"
+              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+              alt=""
+            />
+            <h2>Cheese Burger</h2>
+            <h3>300g</h3>
+            <h1>Rp. 45.000</h1>
+          </div> */}
+          {/* <div className="menu1 col-lg-3 col-md-3">
+            <img
+              className="img-fluid"
+              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+              alt=""
+            />
+            <h2>Cheese Burger</h2>
+            <h3>300g</h3>
+            <h1>Rp. 45.000</h1>
+          </div> */}
+          {/* <div className="menu1 col-lg-3 col-md-3">
+            <img
+              className="img-fluid"
+              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+              alt=""
+            />
+            <h2>Cheese Burger</h2>
+            <h3>300g</h3>
+            <h1>Rp. 45.000</h1>
+          </div> */}
+          {/* <div className="menu1 col-lg-3 col-md-3">
+            <img
+              className="img-fluid"
               src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
               alt=""
             />
@@ -68,7 +143,17 @@ const Kasir = () => {
             <h3>300g</h3>
             <h1>Rp. 45.000</h1>
           </div>
-          <div className="menu1">
+          <div className="menu1 col-lg-3 col-md-3">
+            <img
+              className="img-fluid"
+              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+              alt=""
+            />
+            <h2>Cheese Burger</h2>
+            <h3>300g</h3>
+            <h1>Rp. 45.000</h1>
+          </div> */}
+          {/* <div className="menu1">
             <img
               src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
               alt=""
@@ -76,8 +161,8 @@ const Kasir = () => {
             <h2>Cheese Burger</h2>
             <h3>300g</h3>
             <h1>Rp. 45.000</h1>
-          </div>
-          <div className="menu1">
+          </div> */}
+          {/* <div className="menu1">
             <img
               src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
               alt=""
@@ -85,37 +170,10 @@ const Kasir = () => {
             <h2>Cheese Burger</h2>
             <h3>300g</h3>
             <h1>Rp. 45.000</h1>
-          </div>
-          <div className="menu1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div>
-          <div className="menu1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div>
-          <div className="menu1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div>
+          </div> */}
         </div>
       </section>
-      <section id="kanan">
+      <section id="kanan" className="col-lg-3 col-md-4">
         <div className="table-order">
           <img src={dinner} alt="" />
         </div>
@@ -161,7 +219,7 @@ const Kasir = () => {
                 <div className="button-minus">
                   <img src={minus} alt="" />
                 </div>
-                <h4>02</h4>
+                <h4>160</h4>
                 <div className="button-plus">
                   <img src={plus} alt="er" />
                 </div>
@@ -185,7 +243,7 @@ const Kasir = () => {
                 <div className="button-minus">
                   <img src={minus} alt="" />
                 </div>
-                <h4>02</h4>
+                <h4>160</h4>
                 <div className="button-plus">
                   <img src={plus} alt="er" />
                 </div>
@@ -209,7 +267,7 @@ const Kasir = () => {
                 <div className="button-minus">
                   <img src={minus} alt="" />
                 </div>
-                <h4>02</h4>
+                <h4>160</h4>
                 <div className="button-plus">
                   <img src={plus} alt="er" />
                 </div>

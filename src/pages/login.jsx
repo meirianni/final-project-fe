@@ -2,8 +2,8 @@ import React from "react";
 
 function Login() {
   return (
-    <div id="login">
-      <div className="form-login">
+    <div className="row" id="login">
+      <div className="col-lg-2 form-login">
         <h1>Welcome back </h1>
         <h3>Welcome back ! Please enter your details</h3>
         <form>
@@ -39,7 +39,7 @@ function Login() {
         </form>
       </div>
 
-      <div className="hero-login"></div>
+      <div className="col hero-login"></div>
     </div>
   );
 }

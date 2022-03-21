@@ -1,6 +1,7 @@
 #login {
   display: flex;
   flex-direction: row;
+
   .form-login {
     background-color: white;
     width: 50%;
@@ -8,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin-left: 25vh;
+    margin-left: 20vh;
     flex-direction: column;
     h1 {
       font-size: 50px;
@@ -45,7 +46,7 @@
     background-position: center;
     background-size: cover;
     border-radius: 20px 0 0 20px;
-    width: 50vw;
+    width: 100vw;
     height: 100vh;
   }
 }

@@ -8,10 +8,10 @@ import Admin from "./admin";
 function Index() {
   return (
     <>
-      {/* <Kasir /> */}
+      <Kasir />
       {/* <Login /> */}
       {/* <Kitchen /> */}
-      <Admin />
+      {/* <Admin /> */}
     </>
   );
 }
