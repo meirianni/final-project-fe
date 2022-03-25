@@ -1,7 +1,9 @@
 import axios from "axios";
 export const getProducts = async () => {
   try {
-    const { data } = await axios.get(`localhost:3001/api/cashier/products/get`);
+    const productApiURL = "localhost:3001/api/cashier/products/get";
+
+    const { data } = await axios.get(`${productApiURL}`);
     return {
       code: 200,
       status: "success",

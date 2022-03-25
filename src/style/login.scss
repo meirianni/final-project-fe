@@ -1,10 +1,4 @@
 #login {
-<<<<<<< HEAD
-  display: flex;
-  flex-direction: row;
-
-=======
->>>>>>> d4234a010b7e7e449f0a93c0211f6e5fe4ece5ce
   .form-login {
     background-color: white;
     width: 50%;
@@ -53,7 +47,7 @@
   //width: 50vw;
   height: 97vh;
 }
-@media (max-width:720px) {
+@media (max-width: 720px) {
   .hero-login {
     display: none;
   }

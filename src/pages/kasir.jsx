@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 // import Modal from "../../component/modal.jsx";
 
-import { getProducts } from "../service/product";
-
+// import { getProducts } from "../service/product";
+import axios from "axios";
 import logo from "../assets/logo.png";
 import alldish from "../assets/spoon-and-fork.png";
 import burgers from "../assets/burger.png";
@@ -18,19 +18,29 @@ import tick from "../assets/tick.png";
 //bikin function
 
 const Kasir = () => {
+  const productApiURL = "http://localhost:3001/api/cashier/products/get";
+
+  let token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZUlkIjoxLCJlbXBsb3llZU5hbWUiOiJZdWtpIEYiLCJpYXQiOjE2NDc4NzI2NzUsImV4cCI6MTY0ODQ3NzQ3NX0.WrvoSbPv7Bj7RvzghYlvzemCKKZJn4cYTNSuZ3aEZj4";
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
   const [data, setData] = useState([]);
 
   const getData = async () => {
-    const { code, products, msg } = await getProducts();
-    if (code === 200) {
-      setData(products);
-    } else {
-      alert(msg);
-    }
+    await axios
+      .get(`${productApiURL}`, config)
+      .then((getProduct) => {
+        // console.log(getProduct);
+        setData(getProduct.data.data);
+      })
+      .catch((err) => alert(err));
   };
 
   useEffect(() => {
     getData();
+    // console.log(data);
     // ... another func
   }, []);
 
@@ -83,94 +93,12 @@ const Kasir = () => {
         <div className="menu row">
           {data.map((product, idx) => (
             <div key={idx} className="menu1 col-lg-3 col-md-3">
-              <img
-                className="img-fluid"
-                src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-                alt=""
-              />
+              <img className="img-fluid" src={product.image} alt="" />
               <h2>{product.name}</h2>
               <h3>{product.size}</h3>
               <h1>{product.price}</h1>
             </div>
           ))}
-          {/* <div className="menu1 col-lg-3 col-md-3">
-            <img
-              className="img-fluid"
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
-          {/* <div className="menu1 col-lg-3 col-md-3 ">
-            <img
-              className="img-fluid"
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
-          {/* <div className="menu1 col-lg-3 col-md-3">
-            <img
-              className="img-fluid"
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
-          {/* <div className="menu1 col-lg-3 col-md-3">
-            <img
-              className="img-fluid"
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
-          {/* <div className="menu1 col-lg-3 col-md-3">
-            <img
-              className="img-fluid"
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div>
-          <div className="menu1 col-lg-3 col-md-3">
-            <img
-              className="img-fluid"
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
-          {/* <div className="menu1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
-          {/* <div className="menu1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />
-            <h2>Cheese Burger</h2>
-            <h3>300g</h3>
-            <h1>Rp. 45.000</h1>
-          </div> */}
         </div>
       </section>
       <section id="kanan" className="col-lg-3 col-md-4">
