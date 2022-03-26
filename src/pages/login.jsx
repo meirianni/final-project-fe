@@ -1,6 +1,7 @@
 import React from "react";
 import useForm  from '../services/helper'
 import authLogin from '../api/auth'
+import Swal from '../services/swal'
 
 const Login = (history) => {
 
@@ -12,25 +13,21 @@ const Login = (history) => {
   function submit(e) {
     e.preventDefault();
       authLogin.login(username, password)
-          .then((res) => {
-                
+          .then((res) => {                
                 console.log(res.data)
-                if (res.status === 200){                    
+                if (res.data.status === "success"){                    
                   localStorage.setItem(
                     "mini-pos:token",
                     JSON.stringify({
-                      ...res.data,
-                      email: res.email,
-                      employeeID: res.id
-                    })
+                     data: res.data.token})                     
                   );
+                  Swal.notification(res.data.message, res.data.status);
+                  window.location = '/admin'
                 }else{
-                  alert(res.data.data.message)
+                  Swal.notification(res.data.message, res.data.status);
                 }
           })
-          .catch((err) => {})
-
-    alert(e)
+          .catch((err) => {alert(err)})
   }
 
   return (

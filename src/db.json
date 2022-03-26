@@ -1,0 +1,11 @@
+{
+  "menu": {
+    "kasir": [
+      { "nama": "all dish", "image": "assets/spoon-and-fork.png" },
+      { "nama": "burger", "image": "assets/spoon-and-fork.png" },
+      { "nama": "spagheti", "image": "assets/spoon-and-fork.png" },
+      { "nama": "friedChicken", "image": "assets/spoon-and-fork.png" },
+      { "nama": "Drinks", "image": "assets/spoon-and-fork.png" }
+    ]
+  }
+}

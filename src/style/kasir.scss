@@ -1,0 +1,368 @@
+.section-cashier {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+
+  #sidebar {
+    // width: 200px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 3px 3px 3px #808080;
+    z-index: 999;
+
+    // @include sm-screen {
+    //   display: none;
+    // }
+    .brand {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin: 20px 10px 10px 10px;
+      display: block;
+
+      img {
+        // width: 20px;
+        height: 20px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      h1 {
+        font-size: 15px;
+        font-weight: 800;
+        span {
+          color: #c7151d;
+          font-size: 20px;
+        }
+      }
+    }
+    .choice {
+      margin-top: 50px;
+      margin-left: 5px;
+      flex-direction: column;
+      .choices {
+        background-color: white;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 15px;
+        margin-top: 15px;
+        margin-left: 5px;
+        img {
+          width: 20px;
+          height: 20px;
+          margin-top: 5px;
+        }
+        h2 {
+          color: black;
+          font-size: 15px;
+          font-weight: 500;
+          //   margin-left: 10px;
+          margin-top: 10px;
+        }
+      }
+      .choices:hover {
+        background-color: #ffca40;
+        // padding: 5px;
+        // width: 100px;
+        // height:;
+      }
+
+      @include sm-screen {
+        margin-left: 5px;
+      }
+    }
+    .profil {
+      display: flex;
+      margin-top: 30px;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+      h3 {
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      h4 {
+        font-size: 10px;
+        margin-top: 5px;
+        color: #808080;
+      }
+    }
+  }
+  #center {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    // margin-left: 20px;
+    @include sm-screen {
+      margin-left: 5px;
+    }
+    .nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .name {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-left: 15px;
+        h1 {
+          font-size: 30px;
+          font-weight: 500;
+        }
+        img {
+          height: 30px;
+          width: 30px;
+          margin-left: 13px;
+        }
+      }
+      .input {
+        width: 30%;
+        margin-top: 15px;
+      }
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+      overflow: scroll;
+      //   margin-top: ;15px
+      .menu1 {
+        // width: 250px;
+        height: 250px;
+        background-color: white;
+        box-shadow: 1px 1px 1px #808080;
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px;
+        justify-content: center;
+        align-items: center;
+        margin: 15px;
+        // z-index: 1000;
+        img {
+          width: 70%;
+          height: 70%;
+          border-radius: 15px;
+          background-size: cover;
+          //   margin-top: 10px;
+        }
+        h2 {
+          font-size: 15px;
+          margin-top: 5px;
+          font-weight: 700;
+        }
+        h3 {
+          font-size: 15px;
+          color: #808080;
+        }
+        h1 {
+          font-size: 20px;
+          background-color: #ffca40;
+          padding: 5px;
+          //   margin-bottom: 10px;
+          border-radius: 10px;
+        }
+      }
+      .menu1:hover {
+        box-shadow: 1px 1px 4px #808080;
+      }
+      @include sm-screen {
+        .menu {
+          flex-direction: row;
+        }
+      }
+      // .pagination {
+      //   position: ;
+      // }
+    }
+  }
+  #kanan {
+    background-color: white;
+    // width: 750px;
+    height: 100vh;
+    // box-shadow: -0.5px 1px 1px #808080;
+    display: flex;
+    flex-direction: column;
+    .table-order {
+      //   width: 100%;
+      height: 60px;
+      background-color: #ffca40;
+      img {
+        height: 40px;
+        width: 40px;
+        margin: 10px;
+      }
+    }
+    .order {
+      justify-content: center;
+
+      .new-order {
+        width: 50%;
+        outline: none;
+        border: none;
+      }
+      .history-order {
+        width: 50%;
+        outline: none;
+        border: none;
+        background-color: #808080;
+      }
+    }
+    .order-section {
+      //   width: 100%;
+      margin-bottom: 5px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      .order-page {
+        height: 400px;
+        overflow: scroll;
+        .order1 {
+          display: flex;
+          margin-bottom: 5px;
+          flex-direction: row;
+          background-color: #f8f8f8;
+          img {
+            width: 90px;
+            height: 90px;
+            border-radius: 8px;
+          }
+          .info {
+            margin-left: 5px;
+            h2 {
+              font-size: 13px;
+            }
+            h3 {
+              font-size: 12px;
+            }
+            h4 {
+              font-size: 9px;
+              color: #808080;
+            }
+            .button-order {
+              display: flex;
+              flex-direction: row;
+              .button-minus {
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+              .button-plus {
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+              h4 {
+                font-size: 14px;
+                margin-top: 4px;
+                margin-left: 4px;
+                margin-right: 4px;
+                color: #c7151d;
+                font-weight: 700;
+              }
+              .button-plus {
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
+          }
+          .total {
+            position: relative;
+            flex-direction: row;
+            display: flex;
+            margin-left: 80px;
+
+            img {
+              width: 13px;
+              height: 13px;
+              top: 10px;
+              position: absolute;
+              float: right;
+              margin-left: 70px;
+              margin-top: 70px;
+            }
+            h1 {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+    .total-all {
+      width: 100%;
+      height: 100px;
+      border: solid 1px #808080;
+      border-right-style: none;
+      border-left-style: none;
+      display: flex;
+      flex-direction: row;
+      .subtotal {
+        // margin-left: 20px;
+        margin-top: 20px;
+        h4 {
+          font-size: 15px;
+          font-weight: 400;
+          span {
+            font-size: 17px;
+            font-weight: 600;
+          }
+        }
+      }
+      .price {
+        margin-left: 220px;
+        margin-top: 20px;
+        h4 {
+          font-size: 15px;
+          font-weight: 400;
+          span {
+            font-size: 17px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+    .submit-order {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 7px;
+      margin-right: 8px;
+      padding: 5px;
+      background-color: #c7151d;
+      width: 100px;
+      border-radius: 8px;
+      margin-left: 250px;
+
+      img {
+        width: 20px;
+        height: 20px;
+        align-items: center;
+      }
+      h3 {
+        margin-top: 5px;
+        font-size: 10px;
+        font-weight: 800;
+      }
+    }
+  }
+}

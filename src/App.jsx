@@ -26,7 +26,7 @@ function NotFound() {
 }
 
 function RequireAuth() {
-  let auth = sessionStorage.getItem('logged');
+  let auth = localStorage.getItem('mini-pos:token');
   let location = useLocation();
 
   if (!auth) {
@@ -43,24 +43,19 @@ function App() {
         <BrowserRouter>
           <Routes>
 
-            {/* PUBLIC ROUTES
-            Pages yang bisa di akses oleh siapa pun pengunjung website
-            */}
           <Route>
-            <Route path="/" element={<Admin />} />
+            
             <Route path="/kasir" element={<Kasir />} />
             <Route path="/kichen" element={<Kitchen />} />
 
 
             <Route path="/login" element={<Auth />} />
-            {/* <Route element={<RequireAuth />}>
+            <Route element={<RequireAuth />}>
+              <Route path="/" element={<Admin />} />
               <Route index path="/admin" element={<Admin />} />
-            </Route> */}
+            </Route>
 
           </Route>
-            {/* NOT FOUND PAGE
-            end point yang tak terdapaftar akan dialihkan ke page not found
-            */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter> 

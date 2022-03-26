@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin-left: 25vh;
+    margin-left: 20vh;
     flex-direction: column;
     h1 {
       font-size: 50px;
@@ -47,7 +47,7 @@
   //width: 50vw;
   height: 97vh;
 }
-@media (max-width:720px) {
+@media (max-width: 720px) {
   .hero-login {
     display: none;
   }
