@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import Modal from "../../component/modal.jsx";
+import ReactPaginate from "react-paginate";
 
 // import { getProducts } from "../service/product";
 import axios from "axios";
@@ -18,6 +19,26 @@ import tick from "../assets/tick.png";
 //bikin function
 
 const Kasir = () => {
+  const [product, setProduct] = useState([]);
+  const [order, setOrder] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [counter, setCounter] = useState(1);
+  const incrementCounter = (qty, id) => {
+    setCounter(counter + 1);
+    getOrder();
+  }; // di tambah metode post axios untuk menambah qty sesuai order product id
+  const decrementCounter = (qty, id) => {
+    setCounter(counter - 1);
+    getOrder();
+  }; // di tambah metode post axio untuk mengurangi qty sesuai order product id
+  const [postsPerPage] = useState(5);
+  const [offset, setOffset] = useState(1);
+  const [posts, setAllPosts] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+
+  if (counter <= 0) {
+    decrementCounter = () => setCounter(1);
+  }
   const productApiURL = "http://localhost:3001/api/cashier/products/get";
 
   let token =
@@ -26,27 +47,89 @@ const Kasir = () => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const [data, setData] = useState([]);
-
-  const getData = async () => {
+  const getProduct = async () => {
     await axios
-      .get(`${productApiURL}`, config)
-      .then((getProduct) => {
+      .get(`http://localhost:3001/api/cashier/products/get`, config) //mengambil data dari server
+      .then((response) => {
+        //response :variabel
         // console.log(getProduct);
-        setData(getProduct.data.data);
+
+        setProduct(response.data.data);
       })
       .catch((err) => alert(err));
   };
 
+  const getOrder = async () => {
+    await axios
+      .get(`http://localhost:3001/api/cashier/orders/cart`, config) //mengambil data dari server
+      .then((response) => {
+        //response :variabel
+        // console.log(response);
+        // alert("ok"); //kenapa tidak keluar!
+        setOrder(response.data.data);
+      })
+      .catch((err) => alert(err));
+  };
+  // const getAllData = async () => {
+  //   const res = await axios.get(`${productApiURL}`, config);
+  //   const paginate = res.data;
+  //   const slice = paginate.slice(offset - 1, offset - 1 + 1 + postsPerPage);
+
+  //   // for displaying data
+  //   const postData = getData(slice);
+
+  //   //using hooks to set value
+  //   setAllPosts(postData);
+  //   setPageCount(Math.ceil(data.length / postsPerPage));
+  // };
+
+  const postOrder = async (qty, id) => {
+    await axios
+      .post(
+        `localhost:3001/api/cashier/orders/cart`,
+        {
+          table: "Meja 1",
+          qtyOrder: qty,
+          productID: id,
+        },
+        config
+      )
+      .then((order) => {
+        if (order.data.status === "success") {
+          getOrder();
+        }
+        //setOrder((prevOrder) => [...prevOrder, order]);
+      })
+      .catch((err) => alert(err));
+  };
+
+  // const handleChange = (e) => {
+  //   e.preventDefault();
+  //   setSearchInput(e.target.value);
+  // };
+
+  // const handlePageClick = (e) => {
+  //   const selectedPage = e.selected;
+  //   setOffset(selectedPage + 1);
+  // };
+
+  // if (searchInput.length > 0) {
+  //   data.filter((product) => {
+  //     return product.name.match(searchInput);
+  //   });
+  // }
+
   useEffect(() => {
-    getData();
+    getProduct();
+    getOrder();
+
     // console.log(data);
     // ... another func
   }, []);
 
   return (
     <div className="row section-cashier">
-      <section id="sidebar" className="col-1">
+      <section id="sidebar" className="col-lg-1">
         <div className="brand">
           <img src={logo} alt="" />
           <h1>
@@ -85,23 +168,52 @@ const Kasir = () => {
           <h4>Kasir</h4>
         </div>
       </section>
-      <section id="center" className="col-lg-8 col-md-6">
-        <div className="name">
-          <h1>Burgers</h1>
-          <img src={burgercolor} alt="" />
+      <div id="center" className="col-lg-8 col-md-6">
+        <div className="nav">
+          <div className="name">
+            <h1>Burgers</h1>
+            <img src={burgercolor} alt="" />
+          </div>
+          <div className="input mb-3">
+            <input
+              type="search"
+              className="form-control"
+              placeholder="Search here"
+              // onChange={handleChange}
+              // value={searchInput}
+              // aria-describedby="basic-addon1"
+            />
+          </div>
         </div>
+
         <div className="menu row">
-          {data.map((product, idx) => (
-            <div key={idx} className="menu1 col-lg-3 col-md-3">
+          {product.map((product, idx) => (
+            <div
+              key={idx}
+              className="menu1 col-lg-3 col-md-3"
+              onClick={() => postOrder(1, product.id)}
+              // buat fungsi untuk manggil product yang tadi
+            >
               <img className="img-fluid" src={product.image} alt="" />
               <h2>{product.name}</h2>
               <h3>{product.size}</h3>
-              <h1>{product.price}</h1>
+              <h1>Rp. {product.price}</h1>
             </div>
           ))}
         </div>
-      </section>
-      <section id="kanan" className="col-lg-3 col-md-4">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          // onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      </div>
+      <div id="kanan" className="col-lg-3 col-md-4">
         <div className="table-order">
           <img src={dinner} alt="" />
         </div>
@@ -110,101 +222,37 @@ const Kasir = () => {
           <button className="history-order">History Order</button>
         </div>
         <div className="order-section">
-          <div className="order1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />{" "}
-            <div className="info">
-              <h2>Cheese Burger</h2>
-              <h3>45.000</h3>
-              <h4>size : 300g</h4>
-              <div className="button-order">
-                <div className="button-minus">
-                  <img src={minus} alt="" />
-                </div>
-                <h4>02</h4>
-                <div className="button-plus">
-                  <img src={plus} alt="er" />
-                </div>
-              </div>
-            </div>
-            <div className="total">
-              <img src={close} alt="" />
-              <h1>90.000</h1>
-            </div>
-          </div>
-          <div className="order1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />{" "}
-            <div className="info">
-              <h2>Cheese Burger</h2>
-              <h3>45.000</h3>
-              <h4>size : 300g</h4>
-              <div className="button-order">
-                <div className="button-minus">
-                  <img src={minus} alt="" />
-                </div>
-                <h4>160</h4>
-                <div className="button-plus">
-                  <img src={plus} alt="er" />
+          <div className="order-page">
+            {order.map((order, idx) => (
+              <div className="order1" key={idx}>
+                <input type="hidden" name="id" value={order.id} />
+                <img src={"localhost:3001/" + order.image} alt="" />
+                <div className="info">
+                  <h2>{order.product.name}</h2>
+                  <h3>{order.product.price}</h3>
+                  <h4>{order.product.size}</h4>
+                  <div className="button-order">
+                    <div
+                      className="button-minus"
+                      onClick={decrementCounter(order.qtyOrder, order.id)}
+                    >
+                      <img src={minus} alt="" />
+                    </div>
+                    <h4>{order.qtyOrder}</h4>
+                    <div
+                      className="button-plus"
+                      onClick={incrementCounter(order.qtyOrder, order.id)}
+                    >
+                      <img src={plus} alt="er" />
+                    </div>
+                  </div>
+                  <div className="total">
+                    <img src={close} alt="" />
+                    <h1>90.000</h1>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="total">
-              <img src={close} alt="" />
-              <h1>90.000</h1>
-            </div>
-          </div>
-          <div className="order1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />{" "}
-            <div className="info">
-              <h2>Cheese Burger</h2>
-              <h3>45.000</h3>
-              <h4>size : 300g</h4>
-              <div className="button-order">
-                <div className="button-minus">
-                  <img src={minus} alt="" />
-                </div>
-                <h4>160</h4>
-                <div className="button-plus">
-                  <img src={plus} alt="er" />
-                </div>
-              </div>
-            </div>
-            <div className="total">
-              <img src={close} alt="" />
-              <h1>90.000</h1>
-            </div>
-          </div>
-          <div className="order1">
-            <img
-              src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt=""
-            />{" "}
-            <div className="info">
-              <h2>Cheese Burger</h2>
-              <h3>45.000</h3>
-              <h4>size : 300g</h4>
-              <div className="button-order">
-                <div className="button-minus">
-                  <img src={minus} alt="" />
-                </div>
-                <h4>160</h4>
-                <div className="button-plus">
-                  <img src={plus} alt="er" />
-                </div>
-              </div>
-            </div>
-            <div className="total">
-              <img src={close} alt="" />
-              <h1>90.000</h1>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -229,7 +277,7 @@ const Kasir = () => {
           <img src={tick} alt="" />
           <h3>Submit Order</h3>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
