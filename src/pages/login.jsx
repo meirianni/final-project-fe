@@ -13,15 +13,35 @@ const Login = (history) => {
   function submit(e) {
     e.preventDefault();
       authLogin.login(username, password)
-          .then((res) => {                
-                console.log(res.data)
-                if (res.data.status === "success"){                    
+          .then((res) => {            
+                if (res.data.status === "success"){    
+                  const production =
+                      process.env.REACT_APP_FRONTPAGE_URL ===
+                      ""
+                        ? "Domain = localhost:3000"
+                        : "";
+
                   localStorage.setItem(
                     "mini-pos:token",
                     JSON.stringify({
-                     data: res.data.token})                     
+                     ...res.data.data})                     
                   );
+
+                  const redirect = localStorage.getItem("mini-pos:redirect");
+                  const userCookie = {
+                    name: username,
+                  };
+
+                  const expires = new Date(
+                    new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                  );
+
+                  document.cookie = `mini-pos:user=${JSON.stringify(
+                    userCookie
+                  )}; expires=${expires.toUTCString()}; path:/; ${production}`;
+
                   Swal.notification(res.data.message, res.data.status);
+          
                   window.location = '/admin'
                 }else{
                   Swal.notification(res.data.message, res.data.status);
@@ -49,6 +69,7 @@ const Login = (history) => {
                   placeholder="Enter your email"
                   onChange={setState}
                   value={username}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -63,6 +84,7 @@ const Login = (history) => {
                   placeholder="password"
                   onChange={setState}
                   value={password}
+                  required
                 />
               </div>
 
