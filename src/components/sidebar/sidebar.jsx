@@ -27,19 +27,19 @@ const SideBar = ({ isOpen, toggle }) => (
         <NavItem>
           <NavLink tag={Link} to={"/admin"}>
             <FontAwesomeIcon icon={faHome} className="mr-2" />
-            Admin
+             &nbsp; Admin
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to={"/kasir"}>
             <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-            Cashier
+            &nbsp; Cashier
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to={"/kichen"}>
             <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-             Kichen
+            &nbsp; Kichen
           </NavLink>
         </NavItem>
       </Nav>

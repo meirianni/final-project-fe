@@ -11,7 +11,7 @@ import Content from "../components/content/Content";
     const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
 
     return (
-        <div className="App wrapper">
+        <div className="Kichen wrapper">
           <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
           <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
         </div>     

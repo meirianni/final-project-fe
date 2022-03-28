@@ -9,7 +9,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     fluid
     className={classNames("content", { "is-open": sidebarIsOpen })}
   >
-    <h1>Welcome in Dine In</h1>
+    <center><h1>Welcome Dine In POS</h1></center>
   </Container>
 );
 
