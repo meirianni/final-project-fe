@@ -1,4 +1,4 @@
-import "./App.css";
+//import "./App.css";
 import "./index.scss";
 import Auth from './pages/login';
 import Admin from './pages/admin';
