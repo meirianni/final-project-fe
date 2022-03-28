@@ -39,9 +39,13 @@ const  KitchenDone = () => {
               <img src={bell} alt="" />
               <h2>New Order</h2>{" "}
             </Link>
-            <Link to="/kichen/done" className="choices">
+            <Link to="/kichen/done" className="choices active">
               <img src={checklist} alt="" />
               <h2>Order Done</h2>{" "}
+            </Link>            
+            <Link to="/admin" className="choices text-center">
+              <img src={logo} alt="" />
+              <h2>Home</h2>{" "}
             </Link>
         </div>
 
@@ -61,7 +65,7 @@ const  KitchenDone = () => {
         </div>
         <div className="menu">
             {orderDone.map((order, idx) => (
-              <div className="menu1" key={idx}>
+              <div className="menu1 text-center" key={idx}>
                 <h1>#{ order.id }</h1>
                 <h2>{ (order.customer !== null)?order.customer.name:""}</h2>
                 <div className="list-menu1">

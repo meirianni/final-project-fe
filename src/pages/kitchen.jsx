@@ -45,11 +45,11 @@ const  Kitchen = () => {
           </h1>
         </div>
         <div className="choice">
-          <Link to="/kichen" className="choices">
+          <Link to="/kichen" className="choices active">
             <img src={bell} alt="" />
             <h2>New Order</h2>{" "}
           </Link>
-          <Link to="/kichen/done" className="choices" active>
+          <Link to="/kichen/done" className="choices">
             <img src={checklist} alt="" />
             <h2>Order Done</h2>{" "}
           </Link>
@@ -99,7 +99,7 @@ const  Kitchen = () => {
                       ))}
                     </tbody>
                   </table>
-                  <button className="btn btn-warning " onClick={() => postOrder(order.id)}>Done</button>
+                  <button className="btn btn-warning text-center" onClick={() => postOrder(order.id)}>Done</button>
                 </div>
               </div>
             ))}

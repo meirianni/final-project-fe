@@ -56,6 +56,11 @@
       .choices:hover {
         background-color: #ffca40;
       }
+
+      .active {
+        background-color: #ffca40;
+        color: #ffca40;
+      }
     }
     .profil {
       display: flex;
