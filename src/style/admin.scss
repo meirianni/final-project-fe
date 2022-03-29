@@ -1,0 +1,63 @@
+.app {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  .sidebar {
+    background-color: blue;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 200px;
+    height: 100vh;
+    .navbar-brand {
+      h1 {
+        font-size: 20px;
+        font-weight: 800;
+        margin-left: 0;
+        color: #ffca40;
+        span {
+          color: #c7151d;
+          font-size: 20px;
+        }
+      }
+    }
+    .navbar-nav {
+      display: flex;
+
+      .items {
+        justify-content: start;
+        a {
+          text-decoration: none;
+          font-size: 20px;
+          color: black;
+        }
+        .items-report {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+}
+
+//master-product
+.master-product {
+  color: black;
+  margin-left: 250px;
+  h1 {
+    display: flex;
+  }
+  button {
+    display: flex;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    .form-label {
+      display: flex;
+      justify-content: start;
+    }
+    input {
+      width: 30%;
+    }
+  }
+}

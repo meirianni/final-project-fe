@@ -39,7 +39,6 @@ const Kasir = () => {
   if (counter <= 0) {
     decrementCounter = () => setCounter(1);
   }
-  const productApiURL = "http://localhost:3001/api/cashier/products/get";
 
   let token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZUlkIjoxLCJlbXBsb3llZU5hbWUiOiJZdWtpIEYiLCJpYXQiOjE2NDc4NzI2NzUsImV4cCI6MTY0ODQ3NzQ3NX0.WrvoSbPv7Bj7RvzghYlvzemCKKZJn4cYTNSuZ3aEZj4";
@@ -86,19 +85,19 @@ const Kasir = () => {
   const postOrder = async (qty, id) => {
     await axios
       .post(
-        `localhost:3001/api/cashier/orders/cart`,
+        `http://localhost:3001/api/cashier/orders/cart`,
         {
           table: "Meja 1",
-          qtyOrder: qty,
+          qtyOrder: 1,
           productID: id,
         },
         config
       )
-      .then((order) => {
-        if (order.data.status === "success") {
-          getOrder();
-        }
-        //setOrder((prevOrder) => [...prevOrder, order]);
+      .then((res) => {
+        // const data = res
+        // setOrder(data)
+        getOrder();
+        // console.log(order);
       })
       .catch((err) => alert(err));
   };
@@ -194,7 +193,11 @@ const Kasir = () => {
               onClick={() => postOrder(1, product.id)}
               // buat fungsi untuk manggil product yang tadi
             >
-              <img className="img-fluid" src={product.image} alt="" />
+              <img
+                className="img-fluid"
+                src={`http://localhost:3001${product.image}`} //bikin controller backend
+                alt=""
+              />
               <h2>{product.name}</h2>
               <h3>{product.size}</h3>
               <h1>Rp. {product.price}</h1>
@@ -234,14 +237,14 @@ const Kasir = () => {
                   <div className="button-order">
                     <div
                       className="button-minus"
-                      onClick={decrementCounter(order.qtyOrder, order.id)}
+                      // onClick={decrementCounter(order.qtyOrder, order.id)}
                     >
                       <img src={minus} alt="" />
                     </div>
                     <h4>{order.qtyOrder}</h4>
                     <div
                       className="button-plus"
-                      onClick={incrementCounter(order.qtyOrder, order.id)}
+                      // onClick={incrementCounter(order.qtyOrder, order.id)}
                     >
                       <img src={plus} alt="er" />
                     </div>
