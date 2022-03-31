@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import Modal from "../../component/modal.jsx";
+import Modal from "../component/modal.jsx";
 import ReactPaginate from "react-paginate";
-
-// import { getProducts } from "../service/product";
-import axios from "axios";
+import AddCustomer from "pages/addCustomerorder";
 import logo from "../assets/logo.png";
 import alldish from "../assets/spoon-and-fork.png";
 import burgers from "../assets/burger.png";
@@ -16,88 +14,76 @@ import plus from "../assets/plus.png";
 import minus from "../assets/minus.png";
 import close from "../assets/close.png";
 import tick from "../assets/tick.png";
+
 //bikin function
+
+import kichen from "../api/cashier";
+import cashier from "../api/cashier";
 
 const Kasir = () => {
   const [product, setProduct] = useState([]);
   const [order, setOrder] = useState([]);
+  const [category, setCategory] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [counter, setCounter] = useState(1);
-  const incrementCounter = (qty, id) => {
+  const incrementCounter = () => {
     setCounter(counter + 1);
-    getOrder();
   }; // di tambah metode post axios untuk menambah qty sesuai order product id
-  const decrementCounter = (qty, id) => {
+  const decrementCounter = () => {
     setCounter(counter - 1);
-    getOrder();
   }; // di tambah metode post axio untuk mengurangi qty sesuai order product id
   const [postsPerPage] = useState(5);
   const [offset, setOffset] = useState(1);
   const [posts, setAllPosts] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [orderID, setOrderID] = useState(0);
+  const [amount, setAmount] = useState(0);
+  const [tax, setTax] = useState(0);
 
   if (counter <= 0) {
     decrementCounter = () => setCounter(1);
   }
-
-  let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZUlkIjoxLCJlbXBsb3llZU5hbWUiOiJZdWtpIEYiLCJpYXQiOjE2NDc4NzI2NzUsImV4cCI6MTY0ODQ3NzQ3NX0.WrvoSbPv7Bj7RvzghYlvzemCKKZJn4cYTNSuZ3aEZj4";
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
+  //tambahin semua disini
 
   const getProduct = async () => {
-    await axios
-      .get(`http://localhost:3001/api/cashier/products/get`, config) //mengambil data dari server
+    await cashier
+      .getProduct()
       .then((response) => {
-        //response :variabel
-        // console.log(getProduct);
-
         setProduct(response.data.data);
+      })
+      .catch((err) => alert(err));
+  };
+  const getCategory = async () => {
+    await cashier
+      .getCategory()
+      .then((response) => {
+        setCategory(response.data.data);
+      })
+      .catch((err) => alert(err));
+  };
+  const postOrder = async (qty, id) => {
+    await cashier
+      .postOrder(qty, id)
+      .then(() => {
+        getOrder();
       })
       .catch((err) => alert(err));
   };
 
   const getOrder = async () => {
-    await axios
-      .get(`http://localhost:3001/api/cashier/orders/cart`, config) //mengambil data dari server
+    await cashier
+      .getOrders()
       .then((response) => {
-        //response :variabel
-        // console.log(response);
-        // alert("ok"); //kenapa tidak keluar!
         setOrder(response.data.data);
-      })
-      .catch((err) => alert(err));
-  };
-  // const getAllData = async () => {
-  //   const res = await axios.get(`${productApiURL}`, config);
-  //   const paginate = res.data;
-  //   const slice = paginate.slice(offset - 1, offset - 1 + 1 + postsPerPage);
-
-  //   // for displaying data
-  //   const postData = getData(slice);
-
-  //   //using hooks to set value
-  //   setAllPosts(postData);
-  //   setPageCount(Math.ceil(data.length / postsPerPage));
-  // };
-
-  const postOrder = async (qty, id) => {
-    await axios
-      .post(
-        `http://localhost:3001/api/cashier/orders/cart`,
-        {
-          table: "Meja 1",
-          qtyOrder: 1,
-          productID: id,
-        },
-        config
-      )
-      .then((res) => {
-        // const data = res
-        // setOrder(data)
-        getOrder();
-        // console.log(order);
+        let price = 0;
+        response.data.data.map((order, idx) => {
+          // disini harus implementasikan order ID set amount = price * qtyOrder + semua row     tax =  10% dari amount
+          price += order.product.price * order.qtyOrder;
+          setOrderID(order.id);
+        });
+        setAmount(price);
+        setTax(0.1 * price);
       })
       .catch((err) => alert(err));
   };
@@ -136,6 +122,12 @@ const Kasir = () => {
           </h1>
         </div>
         <div className="choice">
+          {category.map((categories, idx) => (
+            <div className="choices" key={idx}>
+              <img src={alldish} alt="" />
+              <h2>All Dishes</h2>{" "}
+            </div>
+          ))}
           <div className="choices">
             <img src={alldish} alt="" />
             <h2>All Dishes</h2>{" "}
@@ -195,7 +187,7 @@ const Kasir = () => {
             >
               <img
                 className="img-fluid"
-                src={`http://localhost:3001${product.image}`} //bikin controller backend
+                src={`http://159.65.138.79:3001/${product.image}`} //bikin controller backend
                 alt=""
               />
               <h2>{product.name}</h2>
@@ -229,29 +221,29 @@ const Kasir = () => {
             {order.map((order, idx) => (
               <div className="order1" key={idx}>
                 <input type="hidden" name="id" value={order.id} />
-                <img src={"localhost:3001/" + order.image} alt="" />
+                <img
+                  src={`http://159.65.138.79:3001/${order.product.image}`}
+                  alt=""
+                />
                 <div className="info">
-                  <h2>{order.product.name}</h2>
-                  <h3>{order.product.price}</h3>
-                  <h4>{order.product.size}</h4>
-                  <div className="button-order">
-                    <div
-                      className="button-minus"
-                      // onClick={decrementCounter(order.qtyOrder, order.id)}
-                    >
-                      <img src={minus} alt="" />
-                    </div>
-                    <h4>{order.qtyOrder}</h4>
-                    <div
-                      className="button-plus"
-                      // onClick={incrementCounter(order.qtyOrder, order.id)}
-                    >
-                      <img src={plus} alt="er" />
+                  <div className="info-name">
+                    <h2>{order.product.name}</h2>
+                    <h3>{order.product.price}</h3>
+                    <h4>{order.product.size}</h4>
+                    <div className="button-order">
+                      <div className="button-minus" onClick={decrementCounter}>
+                        <img src={minus} alt="" />
+                      </div>
+                      <h4>{order.qtyOrder}</h4>
+                      <div className="button-plus" onClick={incrementCounter}>
+                        <img src={plus} alt="er" />
+                      </div>
                     </div>
                   </div>
+
                   <div className="total">
                     <img src={close} alt="" />
-                    <h1>90.000</h1>
+                    <h1>{order.product.price * order.qtyOrder}</h1>
                   </div>
                 </div>
               </div>
@@ -268,19 +260,36 @@ const Kasir = () => {
             </h4>
           </div>
           <div className="price">
-            <h4>360.000</h4>
-            <h4>36.000</h4>
+            <h4>{amount}</h4>
+            <h4>{tax}</h4>
             <h4>
-              <span>396.000</span>
+              <span>{amount + tax}</span>
             </h4>
           </div>
         </div>
 
-        <div className="submit-order">
+        <div
+          className="submit-order"
+          onClick={() => setIsCreateModalOpen(true)}
+        >
           <img src={tick} alt="" />
           <h3>Submit Order</h3>
         </div>
+        {/* <button onClick={() => setIsCreateModalOpen(true)}>submit</button> */}
       </div>
+      <Modal
+        title={`Tambah data customer ${orderID}`}
+        isOpen={isCreateModalOpen}
+        setOpen={setIsCreateModalOpen}
+        children={
+          <AddCustomer
+            setOpen={setIsCreateModalOpen}
+            amount={amount}
+            tax={tax}
+            orderID={orderID}
+          />
+        }
+      ></Modal>
     </div>
   );
 };

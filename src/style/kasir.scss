@@ -242,8 +242,11 @@
             border-radius: 8px;
           }
           .info {
+            display: flex;
+            flex-direction: row;
             margin-left: 5px;
-            h2 {
+            .info-name {
+h2 {
               font-size: 13px;
             }
             h3 {
@@ -283,8 +286,10 @@
                 }
               }
             }
-          }
-          .total {
+
+            }
+            
+            .total {
             position: relative;
             flex-direction: row;
             display: flex;
@@ -295,14 +300,19 @@
               height: 13px;
               top: 10px;
               position: absolute;
-              float: right;
               margin-left: 70px;
-              margin-top: 70px;
+              // margin-top: 70px;
             }
             h1 {
               font-size: 15px;
+              
+              float: right
+            
+             
             }
           }
+          }
+          
         }
       }
     }
