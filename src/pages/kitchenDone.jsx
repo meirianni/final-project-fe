@@ -1,38 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Swal from '../services/swal'
 import logo from "../assets/logo.png";
 import bell from "../assets/desk-bell.png";
 import checklist from "../assets/checklist.png";
 
-
 import kichen from "../api/kichener"
 
-const  Kitchen = () => {
-  const [order, setOrder] = useState([]);
+const  KitchenDone = () => {
+  const [orderDone, setOrderDone] = useState([]);
 
   const current = new Date();
   const date = `${current.getDate()} / ${current.getMonth()+1} / ${current.getFullYear()}`;
 
-  const getOrder = async () => {
-    await kichen.order()
+  const getOrderDone = async () => {
+    
+    await kichen.orderDone()
       .then((response) => {
-        setOrder(response.data.data);
+        setOrderDone(response.data.data);
       })
       .catch((err) => alert(err));
   };
 
-  const postOrder = async (id) => {
-    await kichen.postDone(id)
-    .then((response) => {
-       Swal.notification(response.data.message,response.data.status)
-       getOrder();
-    })
-    .catch((err) => alert(err));
-  };
-
   useEffect(() => {
-    getOrder();
+    getOrderDone();
 
   }, []);
   return (
@@ -45,18 +35,18 @@ const  Kitchen = () => {
           </h1>
         </div>
         <div className="choice">
-          <Link to="/kichen" className="choices active">
-            <img src={bell} alt="" />
-            <h2>New Order</h2>{" "}
-          </Link>
-          <Link to="/kichen/done" className="choices">
-            <img src={checklist} alt="" />
-            <h2>Order Done</h2>{" "}
-          </Link>
-          <Link to="/admin" className="choices text-center">
-            <img src={logo} alt="" />
-            <h2>Home</h2>{" "}
-          </Link>
+            <Link to="/kichen" className="choices">
+              <img src={bell} alt="" />
+              <h2>New Order</h2>{" "}
+            </Link>
+            <Link to="/kichen/done" className="choices active">
+              <img src={checklist} alt="" />
+              <h2>Order Done</h2>{" "}
+            </Link>            
+            <Link to="/admin" className="choices text-center">
+              <img src={logo} alt="" />
+              <h2>Home</h2>{" "}
+            </Link>
         </div>
 
         <div className="profil">
@@ -74,8 +64,8 @@ const  Kitchen = () => {
           <h2> { date } </h2>
         </div>
         <div className="menu">
-            {order.map((order, idx) => (
-              <div className="menu1" key={idx}>
+            {orderDone.map((order, idx) => (
+              <div className="menu1 text-center" key={idx}>
                 <h1>#{ order.id }</h1>
                 <h2>{ (order.customer !== null)?order.customer.name:""}</h2>
                 <div className="list-menu1">
@@ -99,7 +89,7 @@ const  Kitchen = () => {
                       ))}
                     </tbody>
                   </table>
-                  <button className="btn btn-warning text-center" onClick={() => postOrder(order.id)}>Done</button>
+                  <button className="btn btn-success">Done Send</button>
                 </div>
               </div>
             ))}
@@ -111,4 +101,4 @@ const  Kitchen = () => {
   );
 }
 
-export default Kitchen;
+export default KitchenDone;
