@@ -14,6 +14,7 @@ import plus from "../assets/plus.png";
 import minus from "../assets/minus.png";
 import close from "../assets/close.png";
 import tick from "../assets/tick.png";
+import { Link } from "react-router-dom";
 
 //bikin function
 
@@ -128,26 +129,26 @@ const Kasir = () => {
               <h2>All Dishes</h2>{" "}
             </div>
           ))}
-          <div className="choices">
+          {/* <div className="choices">
             <img src={alldish} alt="" />
             <h2>All Dishes</h2>{" "}
-          </div>
+          </div> */}
           <div className="choices">
             <img src={burgers} alt="" />
             <h2>Burger</h2>{" "}
           </div>
-          <div className="choices">
+          {/* <div className="choices">
             <img src={spagheti} alt="" />
             <h2>Spagheti</h2>{" "}
           </div>
           <div className="choices">
             <img src={friedChicken} alt="" />
             <h2>FriedChicken</h2>{" "}
-          </div>
-          <div className="choices">
-            <img src={drinks} alt="" />
-            <h2>Drinks</h2>{" "}
-          </div>
+          </div> */}
+          <Link to="/admin" className="choices text-center">
+            <img src={logo} alt="" />
+            <h2>Home</h2>{" "}
+          </Link>
         </div>
 
         <div className="profil">
@@ -191,22 +192,12 @@ const Kasir = () => {
                 alt=""
               />
               <h2>{product.name}</h2>
-              <h3>{product.size}</h3>
+              {/* <h3>{product.size}</h3> */}
               <h1>Rp. {product.price}</h1>
             </div>
           ))}
         </div>
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          // onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
+        
       </div>
       <div id="kanan" className="col-lg-3 col-md-4">
         <div className="table-order">

@@ -1,12 +1,22 @@
 import axios from "../services/axios";
 
+let storage = localStorage.getItem("mini-pos:token");
+let confOption
 
- 
- 
-let storage = JSON.parse(localStorage.getItem("mini-pos:token"));
-const confOption = { headers: { Authorization: `Bearer ${storage.token}` },validateStatus: function (status) {
-    return status < 500; // Resolve only if the status code is less than 500
-  }
+if(storage===""){ 
+  confOption = {
+    validateStatus: function (status) {
+      return status < 500; // Resolve only if the status code is less than 500
+    },
+  };
+}else{
+  storage = JSON.parse(localStorage.getItem("mini-pos:token"));
+  confOption = {
+    headers: { Authorization: `Bearer ${storage.token}` },
+    validateStatus: function (status) {
+      return status < 500; // Resolve only if the status code is less than 500
+    },
+  };
 }
 
 export default {

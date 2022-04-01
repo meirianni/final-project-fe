@@ -6,10 +6,7 @@ import Kasir from "./pages/kasir";
 import Kitchen from "./pages/kitchen";
 import KitchenDone from "./pages/kitchenDone";
 
-import { setAuthorizationHeader } from "./services/axios";
-
-import React, { useEffect } from "react";
-import { createBrowserHistory } from "history";
+import React from "react";
 import {
   Routes,
   Route,
@@ -19,7 +16,6 @@ import {
   Outlet,
 } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
 
 function NotFound() {
   return (
@@ -36,7 +32,7 @@ function NotFound() {
 function RequireAuth() {
   let auth = localStorage.getItem("mini-pos:token");
   let location = useLocation();
-  if (!auth) {
+  if (!auth || auth === "") {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
@@ -45,29 +41,21 @@ function RequireAuth() {
 }
 
 function App() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   let session = null;
-  //    if (localStorage.getItem("mini-pos:token")) {
-  //      session = JSON.parse(localStorage.getItem("mini-pos:token"));
-  //     setAuthorizationHeader(session.token);
-
-  //    }
-  // }, [dispatch]);
-
+  if(!localStorage.getItem("mini-pos:token")){
+    localStorage.setItem( "mini-pos:token", "");
+  }
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route>
-            <Route path="/kasir" element={<Kasir />} />
-
             <Route path="/login" element={<Auth />} />
             <Route element={<RequireAuth />}>
               <Route path="/" element={<Admin />} />
               <Route index path="/admin" element={<Admin />} />
               <Route path="/kichen" element={<Kitchen />} />
               <Route path="/kichen/done" element={<KitchenDone />} />
+            <Route path="/kasir" element={<Kasir />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

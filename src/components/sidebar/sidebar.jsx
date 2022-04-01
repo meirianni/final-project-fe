@@ -7,12 +7,18 @@ import {
   faQuestion,
   faImage,
   faCopy,
+  faLock,
 } from "@fortawesome/free-solid-svg-icons";
 import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
 import SubMenu from "./sideMenu";
+
+const Logout = ()=>{
+  localStorage.setItem( "mini-pos:token", "");
+  window.location = '/'
+} 
 
 const SideBar = ({ isOpen, toggle }) => (
   <div className={classNames("sidebar", { "is-open": isOpen })}>
@@ -40,6 +46,12 @@ const SideBar = ({ isOpen, toggle }) => (
           <NavLink tag={Link} to={"/kichen"}>
             <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
             &nbsp; Kichen
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink  onClick={Logout}>
+            <FontAwesomeIcon icon={faLock} className="mr-2" />
+            &nbsp; Logout
           </NavLink>
         </NavItem>
       </Nav>

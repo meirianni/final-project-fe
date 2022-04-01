@@ -75,7 +75,7 @@ const  Kitchen = () => {
         </div>
         <div className="menu">
             {order.map((order, idx) => (
-              <div className="menu1" key={idx}>
+              <div className="menu1 text-center" key={idx}>
                 <h1>#{ order.id }</h1>
                 <h2>{ (order.customer !== null)?order.customer.name:""}</h2>
                 <div className="list-menu1">

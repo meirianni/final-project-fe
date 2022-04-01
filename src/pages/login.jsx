@@ -93,7 +93,8 @@ const Login = (history) => {
                   Sign In
                 </button>
                 <hr className="hr" />
-                <h3>@ copyright 2022</h3>
+                <h3>Design And Development By Mei & Yuki</h3>
+                <h3>@ copyright 2022 </h3>
               </form>
             </div>
 
