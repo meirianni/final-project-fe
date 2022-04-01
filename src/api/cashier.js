@@ -3,7 +3,7 @@ import axios from "../services/axios";
 let storage = localStorage.getItem("mini-pos:token");
 let confOption
 
-if(storage===""){ 
+if(storage==="" || storage === null){ 
   
   confOption = {
     validateStatus: function (status) {
