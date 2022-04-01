@@ -6,4 +6,4 @@ USER node
 RUN npm install
 COPY --chown=node:node . .
 EXPOSE 8090
-CMD [ "node", "index.js" ]
+CMD [ "npm", "run","start" ]

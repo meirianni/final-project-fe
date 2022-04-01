@@ -281,6 +281,7 @@ const Kasir = () => {
         title={`Tambah data customer ${orderID}`}
         isOpen={isCreateModalOpen}
         setOpen={setIsCreateModalOpen}
+        id={parseInt(orderID)}
         children={
           <AddCustomer
             amount={amount}
