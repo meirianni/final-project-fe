@@ -80,7 +80,7 @@ const Kasir = () => {
         response.data.data.map((order, idx) => {
           // disini harus implementasikan order ID set amount = price * qtyOrder + semua row     tax =  10% dari amount
           price += order.product.price * order.qtyOrder;
-          setOrderID(order.id);
+          setOrderID(order.order.id);
         });
         setAmount(price);
         setTax(0.1 * price);
@@ -283,10 +283,9 @@ const Kasir = () => {
         setOpen={setIsCreateModalOpen}
         children={
           <AddCustomer
-            setOpen={setIsCreateModalOpen}
             amount={amount}
             tax={tax}
-            orderID={orderID}
+            id={parseInt(orderID)}
           />
         }
       ></Modal>
