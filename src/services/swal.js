@@ -10,5 +10,14 @@ export default {
             showConfirmButton: false,
             timer: 1500
           })
+    },
+    confirm: (message,status)=>{
+        sweet.fire({
+            position: 'center',
+            icon: status,
+            title: message,
+            showConfirmButton: true,
+            timer: 1500
+          })
     }
 }

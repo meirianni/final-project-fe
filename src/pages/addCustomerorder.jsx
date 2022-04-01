@@ -9,8 +9,16 @@ const AddCustomerorder = ({amount, tax, id}) => {
   const [city, setCity] = useState("");
   
   const postCustomer = async () => {
-    //alert("s")
-    await cashier
+    //Swal.notification("Apakah Trnsaksi akan dilanjutkan?", "information")
+    function sleep(milliseconds) {
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < milliseconds);
+    }
+    
+     cashier
       .postCustomer({
         name: name,
         email: email,
@@ -18,8 +26,7 @@ const AddCustomerorder = ({amount, tax, id}) => {
         address: address,
         city: city,
       })
-      .then((response) => {
-        //alert(response.data.status)
+      .then((response) => {        
         if (response.data.status === "success") {
           const data = payment(response.data.data.id);
           console.log(data)
@@ -28,10 +35,11 @@ const AddCustomerorder = ({amount, tax, id}) => {
         }
       })
       .catch((err) => alert(err));
+
+      sleep(2000)
   };
 
   const payment = async (customerID) => {
-    //alert("sdasda")
     await cashier
       .postPayment({
         amount: amount+tax,
