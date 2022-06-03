@@ -27,7 +27,6 @@ const Login = (history) => {
                      ...res.data.data})                     
                   );
 
-                  const redirect = localStorage.getItem("mini-pos:redirect");
                   const userCookie = {
                     name: username,
                   };
@@ -42,7 +41,7 @@ const Login = (history) => {
 
                   Swal.notification(res.data.message, res.data.status);
           
-                  window.location = '/admin'
+                  window.location = '/'
                 }else{
                   Swal.notification(res.data.message, res.data.status);
                 }

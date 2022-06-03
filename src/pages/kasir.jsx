@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Modal from "../component/modal.jsx";
+import Modal from "../components/modal.jsx";
 import ReactPaginate from "react-paginate";
 import AddCustomer from "pages/addCustomerorder";
 import logo from "../assets/logo.png";
@@ -89,21 +89,19 @@ const Kasir = () => {
       .catch((err) => alert(err));
   };
 
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-  //   setSearchInput(e.target.value);
-  // };
+  function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 
-  // const handlePageClick = (e) => {
-  //   const selectedPage = e.selected;
-  //   setOffset(selectedPage + 1);
-  // };
 
-  // if (searchInput.length > 0) {
-  //   data.filter((product) => {
-  //     return product.name.match(searchInput);
-  //   });
-  // }
+  const closeModal = () => {
+    setIsCreateModalOpen(false);    
+    getOrder();
+  };
 
   useEffect(() => {
     getProduct();
@@ -129,22 +127,10 @@ const Kasir = () => {
               <h2>All Dishes</h2>{" "}
             </div>
           ))}
-          {/* <div className="choices">
-            <img src={alldish} alt="" />
-            <h2>All Dishes</h2>{" "}
-          </div> */}
           <div className="choices">
             <img src={burgers} alt="" />
             <h2>Burger</h2>{" "}
           </div>
-          {/* <div className="choices">
-            <img src={spagheti} alt="" />
-            <h2>Spagheti</h2>{" "}
-          </div>
-          <div className="choices">
-            <img src={friedChicken} alt="" />
-            <h2>FriedChicken</h2>{" "}
-          </div> */}
           <Link to="/admin" className="choices text-center">
             <img src={logo} alt="" />
             <h2>Home</h2>{" "}
@@ -277,7 +263,8 @@ const Kasir = () => {
           <AddCustomer
             amount={amount}
             tax={tax}
-            id={parseInt(orderID)}
+            id={parseInt(orderID)}            
+            setOpen={closeModal}
           />
         }
       ></Modal>

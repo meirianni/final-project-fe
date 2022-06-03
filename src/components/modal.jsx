@@ -6,10 +6,12 @@ const ModalCRUD = ({ title, isOpen, setOpen,id, children }) => {
     alert("input terlebih dahulu pesanan!")
     isOpen = false
   }
+
+  
   return (
     <>
       <Modal isOpen={isOpen} toggle={() => setOpen(!isOpen)}>
-        <ModalHeader>{title}</ModalHeader>
+        <ModalHeader>{title} </ModalHeader>
         <ModalBody>{children}</ModalBody>
       </Modal>
     </>

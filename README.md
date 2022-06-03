@@ -78,5 +78,5 @@ npm install -g serve
   docker build --rm -t 184572/mini-pos-react:1.1 .
 
     //runnig docker
-    docker run -d -it -p 3000:3000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name=mini-pos 184572/mini-pos-react:1.1
+    docker run -d -it -p 3000:3000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name=mini-pos-react 184572/mini-pos-react:1.1
     docker run -d -it -p 3001:3001 --restart=always --name=mini-pos -v /var/run/docker.sock:/var/run/docker.sock -v mini-pos-react:/home/node/app -d 184572/mini-pos-react:1.1
